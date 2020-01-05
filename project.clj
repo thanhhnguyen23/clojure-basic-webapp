@@ -6,4 +6,8 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [ring "1.8.0"]]
   :repl-options {:init-ns todo-list.core}
+
+  ;; add profile to project configuration
+  :profiles {:dev
+             {:main todo-list.core/-dev-main}}
   :main todo-list.core) ;; configuration option
