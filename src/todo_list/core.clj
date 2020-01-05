@@ -8,6 +8,6 @@
    (fn [request]
      {:status 200
       :headers {}
-      :body "<html><body><h1>Hello, Clojure World!</h1><h2>Welcome to your first Clojure App</h2</body></html>"})
+      :body "<html><body><h1>Hello, Clojure World!</h1><h2>Welcome to your first Clojure App</h2<h3>This message is returned regardless of the request</h3></body></html>"})
    {:port (Integer. port-number)
     :join? false}))
