@@ -9,6 +9,14 @@
             ;; compojure's request dump function
             [ring.handler.dump :refer [handle-dump]]))
 
+(defn hello
+  "a simple personalized greeting showing the use of variables path elements"
+  [request]
+  (let [name (get-in request [:route-params :name])]
+    {:status 200
+     :headers{}
+     :body (str "Hello " name ". I got your name from the web URL")}))
+
 (defn about
   "information about the website developer"
   [request]
@@ -37,6 +45,7 @@
   (GET "/goodbye" [] goodbye)
   (GET "/about" [] about)
   (GET "/request-info" [] handle-dump)
+  (GET "/hello/:name" [] hello)
   (not-found " <h1>This is not the page you are looking for</h1><p>The page you are requested was not found.</p> "))
 
 (defn -main
