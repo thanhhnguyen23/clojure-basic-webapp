@@ -4,7 +4,17 @@
 
             ;; add compojure to namespace
             [compojure.core :refer [defroutes GET]]
-            [compojure.route :refer [not-found]]))
+            [compojure.route :refer [not-found]]
+
+            ;; compojure's request dump function
+            [ring.handler.dump :refer [handle-dump]]))
+
+(defn request-info
+  "view the info containing the request, useful for debugging"
+  [request]
+  {:status 200
+   :headers{}
+   :body (pr-str request)})
 
 (defn about
   "information about the website developer"
@@ -33,6 +43,7 @@
   (GET "/" [] welcome)
   (GET "/goodbye" [] goodbye)
   (GET "/about" [] about)
+  (GET "/request-info" [] request-info)
   (not-found " <h1>This is not the page you are looking for</h1><p>The page you are requested was not found.</p> "))
 
 (defn -main
