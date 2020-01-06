@@ -116,6 +116,9 @@ awsdevassoc/
 # clojure #
 ###########
 
+# repl doc history
+.lein-repl-history
+
 # mercurial scm
 .hgignore
 
