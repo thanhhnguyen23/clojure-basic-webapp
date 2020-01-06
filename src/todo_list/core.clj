@@ -6,6 +6,12 @@
             [compojure.core :refer [defroutes GET]]
             [compojure.route :refer [not-found]]))
 
+(defn about
+  "information about the website developer"
+  [request]
+  {:status 200
+   :headers {}
+   :body "<h1>About Page</h1> <h2>I'm getting comfortable with Clojure</h2> "})
 
 (defn welcome
   "a ring handler to respond witha simple welcome message"
@@ -26,6 +32,7 @@
 (defroutes app
   (GET "/" [] welcome)
   (GET "/goodbye" [] goodbye)
+  (GET "/about" [] about)
   (not-found " <h1>This is not the page you are looking for</h1><p>The page you are requested was not found.</p> "))
 
 (defn -main
