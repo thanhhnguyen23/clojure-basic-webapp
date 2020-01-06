@@ -14,11 +14,18 @@
      :headers {}
      :body "<html> <body> <h1>Hi Thanh! Welcome to the Clojure World!</h1> <p>Welcome to your first Clojure app!</p>
 <p>Now this updates automatically.</p>
-</body> </html>"
-     })
+</body> </html>"})
+
+(defn goodbye
+  "goodbye route"
+  [request]
+  {:status 200
+   :headers{}
+   :body " <h1>Goodbye!</h1> <p>There's never a right time to say goodbye</p> <p>But we know that we gotta go</p> <p>Our separate ways</p> "})
 
 (defroutes app
   (GET "/" [] welcome)
+  (GET "/goodbye" [] goodbye)
   (not-found " <h1>This is not the page you are looking for</h1><p>The page you are requested was not found.</p> "))
 
 (defn -main
