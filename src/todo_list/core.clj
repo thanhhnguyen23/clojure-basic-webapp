@@ -1,13 +1,31 @@
 (ns todo-list.core
   (:require [ring.adapter.jetty :as webserver]
             [ring.middleware.reload :refer [wrap-reload]]
-
-            ;; add compojure to namespace
             [compojure.core :refer [defroutes GET]]
             [compojure.route :refer [not-found]]
 
             ;; compojure's request dump function
             [ring.handler.dump :refer [handle-dump]]))
+
+;; hashmap named operands to look up allowed operations in clojure
+;; (def operands {"+" + "-" - "*" * ":" /})
+(def operands {"ADD" + "SUBTRACT" - "MULTIPLY" * "DIVIDE" /})
+
+(defn calculator "simple calculator that can add, divide, subtract, and multiply using variable path elements"
+  [request]
+  (let [a (Integer. (get-in request [:route-params :a]))
+        b (Integer. (get-in request [:route-params :b]))
+        op (get-in request [:route-params :op])
+        f (get operands op)]
+    (if f
+      {:status 200
+       :body (str "Calculated result: "(f a b))
+       :headers {}}
+
+      {:status 404
+       ;; :body "unknown operator.  I only recognise + - * : (: is for division)"
+       :body "unknown operator.  I only recognise ADD SUBTRACT MULTIPLY DIVIDE"
+       :headers{}})))
 
 (defn hello
   "a simple personalized greeting showing the use of variables path elements"
@@ -46,7 +64,8 @@
   (GET "/about" [] about)
   (GET "/request-info" [] handle-dump)
   (GET "/hello/:name" [] hello)
-  (not-found " <h1>This is not the page you are looking for</h1><p>The page you are requested was not found.</p> "))
+  (GET "/calculator/:op/:a/:b" [] calculator)
+  (not-found "<h1>Page Requested Not Found</h1>"))
 
 (defn -main
   "A very simple web server using Ring & Jetty"
